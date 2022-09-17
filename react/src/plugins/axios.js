@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode';
 
 
 
-const baseURL = 'http://localhost:8000';
+const baseURL = "https://www.chodae.shop:8000";
 
 let accessToken = (localStorage.hasOwnProperty("accessToken")) ? localStorage.getItem("accessToken") : null;
 let refreshToken = (localStorage.hasOwnProperty("refreshToken")) ? localStorage.getItem("refreshToken") : null;

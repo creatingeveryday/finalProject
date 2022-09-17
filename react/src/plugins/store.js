@@ -10,8 +10,8 @@ const useStore = create(persist(
         nickname: null,
         role: null,
         isLogin: false,
-        frontUrl: "http://localhost:3000",
-        url: "http://localhost:8000",
+        frontUrl: "https://www.chodae.shop",
+        url: "https://www.chodae.shop:8000",
         serachWord: null, //이전 검색어로 활용? 
         getSearchWord: () => {
             if (get().serachWord !== null) {

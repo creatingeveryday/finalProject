@@ -49,7 +49,7 @@ function Faq(props) {
     getPost(boardName, page, qType, qWord, qOrder);
 
     setPaginationNumber(parseInt(page));
-  }, [boardName]);
+  }, [boardName, page, qType, qWord, qOrder]);
 
   const changePage = ({ selected }) => {
     getPost(boardName, selected + 1, qType, qWord, qOrder);

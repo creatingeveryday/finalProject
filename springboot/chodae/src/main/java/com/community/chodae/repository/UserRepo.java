@@ -26,8 +26,8 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	//update , delete, insert 시 @Transctional, @Modifying 어노테이션 필요하다. 
 	@Transactional
 	@Modifying(clearAutomatically = true)
-	@Query("UPDATE FROM User u set u.password = ?2 WHERE u.loginId =?1")
-	int updatePassword(String id, String password);
+	@Query("UPDATE FROM User u set u.password = :password WHERE u.loginId = :id")
+	int updatePassword(@Param("id") String id, @Param("password") String password);
 	
 	Optional<User> findUserByNickname(String nickname);
 	
@@ -35,12 +35,12 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	// 소셜 회원이 아닌 회원을  로그인 아이디로 검색. 
 	@EntityGraph(attributePaths = {"roleSet"}, type = EntityGraph.EntityGraphType.LOAD)
 	@Query("SELECT u from User u WHERE u.social = :social and u.loginId = :loginId")
-	Optional<User> findByLoginId(String loginId, boolean social);
+	Optional<User> findByLoginId(@Param("loginId") String loginId, @Param("social") boolean social);
 	
 	// 소셜 회원이 아닌 회원을  닉네임으로 검색. 
 	@EntityGraph(attributePaths = {"roleSet"}, type = EntityGraph.EntityGraphType.LOAD)
 	@Query("SELECT u from User u WHERE u.social = :social and u.nickname = :nickname")
-	Optional<User> findByNickname(String nickname, boolean social);
+	Optional<User> findByNickname(@Param("nickname") String nickname, @Param("social") boolean social);
 	
 	Boolean existsByLoginId(String loginId);
 	
@@ -49,7 +49,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	@Transactional
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE FROM User u set u.refreshToken = :token WHERE u.nickname = :nickname")
-	int updateRefreshToken(String token, String nickname);
+	int updateRefreshToken(@Param("token") String token, @Param("nickname") String nickname);
 	
 	Optional<User> findById(Long id);
 	User save(User user);

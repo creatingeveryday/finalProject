@@ -35,21 +35,14 @@ public class OAuthUserDetailsService extends DefaultOAuth2UserService {
 	
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-		log.info("------------------");
-		log.info("userRequest="+userRequest);
+
 		
 		String clientName = userRequest.getClientRegistration().getClientName();
-		
-		log.info("clientName="+clientName);
-		log.info("getAdditionalParameters="+userRequest.getAdditionalParameters());
-		
+
 		OAuth2User oAuth2User = super.loadUser(userRequest);
-		log.info("oAuth2User="+oAuth2User);
-		
+
 		oAuth2User.getAttributes().forEach((k,v)->{
-			log.info("@@@@@@@속성값 모두 출력@@@@@@@@@@");
-			log.info(k+" === "+v);
-			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
 		});
 		
 		String nickname = null; 
@@ -61,8 +54,7 @@ public class OAuthUserDetailsService extends DefaultOAuth2UserService {
 			snsId = (String) response.get("id");
 			nickname = (String) response.get("nickname");
 			
-			log.info("네이버의  snsId ::"+snsId);
-			log.info("네이버의 닉네임 ::"+nickname);
+
 			
 		}else if (clientName.equals("Kakao")) {
 			
@@ -70,14 +62,11 @@ public class OAuthUserDetailsService extends DefaultOAuth2UserService {
 			Map<String, Object> properties = oAuth2User.getAttribute("properties");
 			nickname = (String) properties.get("nickname");
 			
-			log.info("카카오  @@@@응답 ::"+properties);
-			log.info("카카오  snsId ::"+snsId);
-			log.info("카카오 닉네임 ::"+nickname);
+
 
 		}
 
 		User member = saveSocialMember(nickname, clientName, snsId);
-		log.info("member ::"+member);
 		
 		
 		
@@ -91,9 +80,7 @@ public class OAuthUserDetailsService extends DefaultOAuth2UserService {
 									.collect(Collectors.toList()),
 				oAuth2User.getAttributes());
 		
-		
-		
-		log.info("authMember::"+authMember);
+
 		
 		authMember.setNickname(member.getNickname());
 		
@@ -105,7 +92,6 @@ public class OAuthUserDetailsService extends DefaultOAuth2UserService {
 	}
 
 	private User saveSocialMember(String nickname, String clientName, String snsId) {
-		log.info("@@@saveSocialMember=>@@");
 		
 		if(nickname == null && clientName == null) {
 			return null;
@@ -116,11 +102,9 @@ public class OAuthUserDetailsService extends DefaultOAuth2UserService {
 		String nicknameInfo = null;
 		
 		if(result.isPresent()) {
-			log.info("@@@이미 가입됨. 가입된 정보 반환@@@");
 			
 			User user = result.get();
-			log.info("user::::"+user);
-			
+
 			//탈퇴된 회원일 경우 재연동
 			if(user.getStatus().equals("F")) {
 				user.setStatus("T");
@@ -171,7 +155,6 @@ public class OAuthUserDetailsService extends DefaultOAuth2UserService {
 		snsInfo.setSnsType(clientName);
 		snsInfo.setSnsCondate(LocalDateTime.now());
 		snsInfo.setUser(savedUser);
-		log.info("@@@user"+user);
 		
 		snsRepo.save(snsInfo);
 		

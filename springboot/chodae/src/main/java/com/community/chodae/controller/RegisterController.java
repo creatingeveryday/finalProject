@@ -20,78 +20,83 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
 
-
 @Log
 @RequiredArgsConstructor
 @RestController
 public class RegisterController {
 
-	private final RegService regService;
-	
-	
-	@Transactional
-	@PostMapping("/reg")
-	public ResponseEntity<?> saveAll(@RequestBody User user) {
-		log.info(""+user);
-		return new ResponseEntity<>(regService.regSave(user), HttpStatus.CREATED);
-	}
-	@Transactional
-	@GetMapping("/reg")
-	public ResponseEntity<?> getAllReg(@RequestBody User user) {
-		return new ResponseEntity<>(regService.getAllReg(), HttpStatus.OK);
-	}
-	@Transactional
-	@GetMapping("/reg/{id}")
-	public ResponseEntity<?> getOneReg(@PathVariable Long id) {
-		return new ResponseEntity<>(regService.getOneReg(id), HttpStatus.OK);
-	}
-	@Transactional
-	@PutMapping("/reg/{id}")
-	public ResponseEntity<?> updateReg(@PathVariable Long id,@RequestBody User user) {
-		return new ResponseEntity<>(regService.updateReg(id, user), HttpStatus.OK);
-	}
-	@Transactional
-	@DeleteMapping("/reg/{id}")
-	public ResponseEntity<?> deleteReg(@PathVariable Long id,@RequestBody User user) {
-		return new ResponseEntity<>(regService.deleteReg(id), HttpStatus.OK);
-	}
-	
-	@Transactional
-	@GetMapping("/reg/me/email")
-	public ResponseEntity<?> getCheckMail(@RequestParam("email") String email) throws Exception{
+    private final RegService regService;
 
 
-		String Eresults =regService.mailCheck(email);
-		if(Eresults==null) {
+    @Transactional
+    @PostMapping("/reg")
+    public ResponseEntity<?> saveAll(@RequestBody User user) {
 
-		}else if (Eresults != null) {
+        return new ResponseEntity<>(regService.regSave(user), HttpStatus.CREATED);
+    }
 
-		}
-		return new ResponseEntity<>(Eresults,HttpStatus.OK);
-	}
-	// 위랑 같은데 합쳐서 보여줄수 있을까? 시간 남으면 알아보기
-	@Transactional
-	@GetMapping("/reg/me/nickname")
-	public ResponseEntity<?> getCheckNick(@RequestParam("nickname") String nickname) throws Exception{
+    @Transactional
+    @GetMapping("/reg")
+    public ResponseEntity<?> getAllReg(@RequestBody User user) {
+        return new ResponseEntity<>(regService.getAllReg(), HttpStatus.OK);
+    }
 
-		String Nresults =regService.nickCheck(nickname);
-		if(Nresults==null) {
+    @Transactional
+    @GetMapping("/reg/{id}")
+    public ResponseEntity<?> getOneReg(@PathVariable Long id) {
+        return new ResponseEntity<>(regService.getOneReg(id), HttpStatus.OK);
+    }
 
-		}else if (Nresults != null) {
+    @Transactional
+    @PutMapping("/reg/{id}")
+    public ResponseEntity<?> updateReg(@PathVariable Long id, @RequestBody User user) {
+        return new ResponseEntity<>(regService.updateReg(id, user), HttpStatus.OK);
+    }
 
-		}
-		return new ResponseEntity<>(Nresults,HttpStatus.OK);
-	}
-	@Transactional
-	@GetMapping("/reg/me/loginId")
-	public ResponseEntity<?> getCheckId(@RequestParam("loginId") String loginId) throws Exception{
+    @Transactional
+    @DeleteMapping("/reg/{id}")
+    public ResponseEntity<?> deleteReg(@PathVariable Long id, @RequestBody User user) {
+        return new ResponseEntity<>(regService.deleteReg(id), HttpStatus.OK);
+    }
 
-		String Iresults =regService.idCheck(loginId);
-		if(Iresults==null) {
+    @Transactional
+    @GetMapping("/reg/me/email")
+    public ResponseEntity<?> getCheckMail(@RequestParam("email") String email) throws Exception {
 
-		}else if (Iresults != null) {
 
-		}
-		return new ResponseEntity<>(Iresults,HttpStatus.OK);
-	}
+        String result = regService.mailCheck(email);
+        if (result == null) {
+
+        } else if (result != null) {
+
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 위랑 같은데 합쳐서 보여줄수 있을까? 시간 남으면 알아보기
+    @Transactional
+    @GetMapping("/reg/me/nickname")
+    public ResponseEntity<?> getCheckNick(@RequestParam("nickname") String nickname) throws Exception {
+
+        String result = regService.nickCheck(nickname);
+        if (result == null) {
+
+        } else if (result != null) {
+
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @Transactional
+    @GetMapping("/reg/me/loginId")
+    public ResponseEntity<?> getCheckId(@RequestParam("loginId") String loginId) throws Exception {
+
+        String result = regService.idCheck(loginId);
+        if (result == null) {
+
+        } else if (result != null) {
+
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

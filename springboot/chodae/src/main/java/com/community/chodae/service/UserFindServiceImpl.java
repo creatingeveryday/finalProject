@@ -108,7 +108,7 @@ public class UserFindServiceImpl implements UserFindService {
 	@Override
 	public int updateRefreshToken(String nickname, String token) {
 		//로그인시  새로발급한 리프레쉬 토큰으로 업데이트
-		log.info(nickname+"@@@@@@@@@@"+token);
+
 		
 		int i = userRepo.updateRefreshToken(token, nickname);
 		
@@ -162,7 +162,7 @@ public class UserFindServiceImpl implements UserFindService {
 		}
 		
 		if(member.getRefreshToken().equals(token)) {
-			log.info(member.getRefreshToken()+"=======>"+token);
+
 			
 			return member;
 		}
@@ -195,7 +195,7 @@ public class UserFindServiceImpl implements UserFindService {
 
 	@Override
 	public String searchId(String name, String email) {
-		log.info(name+"~~~"+email);
+
 		Optional<User> result = userRepo.findUserByNameAndEmail(name, email);
 		
 		if(result.isPresent()) {
@@ -209,7 +209,7 @@ public class UserFindServiceImpl implements UserFindService {
 
 	@Override
 	public String isUser(String loginId, String email) {
-		log.info(loginId+"~~~"+email);
+
 		Optional<User> result = userRepo.findUserByLoginIdAndEmail(loginId, email);
 		
 		if(result.isPresent()) {
@@ -222,7 +222,7 @@ public class UserFindServiceImpl implements UserFindService {
 	//업데이트 
 	@Override
 	public int updatePassword(String id, String password) {
-		log.info(id+"~@@"+password);
+
 		return userRepo.updatePassword(id, passwordEncoder.encode(password));
 	}
 	

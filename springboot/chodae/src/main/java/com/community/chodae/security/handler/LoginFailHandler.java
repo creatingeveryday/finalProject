@@ -21,8 +21,7 @@ public class LoginFailHandler implements AuthenticationFailureHandler{
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		
-		log.info("@@인증실패@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		log.info(exception.getMessage());
+
 		
 		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 		response.setContentType("aplication/json;charset=utf-8");

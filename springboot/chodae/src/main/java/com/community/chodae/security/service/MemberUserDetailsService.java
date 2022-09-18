@@ -28,7 +28,7 @@ public class MemberUserDetailsService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		log.info("@@@MemberUserDetailService::loadUserByUsername:"+username);
+
 		
 		Optional<User> result = userRepo.findByLoginId(username, false);
 		
@@ -37,7 +37,7 @@ public class MemberUserDetailsService implements UserDetailsService{
 		}
 		
 		User member = result.get();
-		log.info(""+member);
+
 		
 		if(member.getStatus().equals("F")) {
 			throw new UsernameNotFoundException("탈퇴된 회원입니다.");

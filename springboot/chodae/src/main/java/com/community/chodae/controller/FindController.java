@@ -34,14 +34,14 @@ public class FindController {
 	public ResponseEntity<String> getTokenByRefreshToken(@RequestParam String nickname, @RequestParam String refreshToken ) {
 		
 		String accessToken = "no";
-		log.info(nickname+"::::"+refreshToken);
+
 		//로그인시 발급하여 저장한 리프레시 토큰을 전달받은 리프레시토큰과  비교 
 		User user = userFindService.checkRefreshToken(nickname, refreshToken);
 		
 		if(user == null) 
 			return new ResponseEntity<String>(accessToken, HttpStatus.FORBIDDEN);
 		
-		log.info(accessToken);
+
 		accessToken = userFindService.getAccessToken(nickname);
 		
 		return new ResponseEntity<String>(accessToken, HttpStatus.OK);
@@ -51,11 +51,11 @@ public class FindController {
 	//성함+메일로 [로그인용 아이디] 찾기
 	@GetMapping("/find/id")
 	public ResponseEntity<String> test(@RequestParam("name") String name, @RequestParam("email") String email) {
-		log.info("이름:"+name+",이메일:"+email);
+
 		//서비스 호출
 		String foundId = userFindService.searchId(name, email);
 		
-		log.info(foundId);
+
 		
 		if(foundId == null) {
 			return new ResponseEntity<String>("NOT FOUND", HttpStatus.FORBIDDEN);	
@@ -81,7 +81,7 @@ public class FindController {
 	//암호화하여 저장
 	@PutMapping("/find/ps")
 	public int updatePs(@RequestParam("id") String id, @RequestParam("password") String password) {
-		log.info("로그인아이디:"+id+",업데이트 비밀번호:"+password);
+
 		return userFindService.updatePassword(id, password);
 	}
 	

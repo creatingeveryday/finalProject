@@ -32,7 +32,7 @@ public class RegService {
 	@Transactional //서비스 함수가 종료 될떄 commit 할지 rollback 할지 관리
 	public User regSave(User user) {
 		
-		log.info("@@@@@@@@@@@@@"+user+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
 		
 		if(user == null || user.getLoginId() == null|| user.getPassword() == null) {
 			throw new RuntimeException("회원가입시 정보 부족");
@@ -80,21 +80,21 @@ public String deleteReg(Long id) {
 }
 public String mailCheck(String email) throws Exception{
 
-	String Eresult = regRepo.findbyMail(email);
+	String result = regRepo.findbyMail(email);
 
-	return Eresult;
+	return result;
 }
 public String nickCheck(String nickname) throws Exception{
 
-	String Nresult = regRepo.findbyNick(nickname);
+	String result = regRepo.findbyNick(nickname);
 
-	return Nresult;
+	return result;
 }
 public String idCheck(String loginId) throws Exception{
 
-	String Iresult = regRepo.findbyId(loginId);
+	String result = regRepo.findbyId(loginId);
 
-	return Iresult;
+	return result;
 }
 }
 

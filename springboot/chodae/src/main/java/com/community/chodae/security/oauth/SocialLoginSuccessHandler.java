@@ -41,18 +41,16 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler{
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		//로그인 성공 후 처리 내용
-		
-		log.info("소셜로그인 성공 후 처리~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		log.info("authentication 객체==="+authentication);
+
 		
 		MemberAuthDTO authMember = (MemberAuthDTO) authentication.getPrincipal();
-		log.info("authMember==="+authMember);
+
 		
 		boolean isSocial = authMember.isSocial();
-		log.info("isSocial==="+isSocial);
+
 		
 		Map<String, Object> attrs = authMember.getAttr();
-		log.info("resAttr==="+attrs);
+
 		
 		String nickname = null; //기존 소셜회원의 닉네임
 		String snsId = null; 
@@ -66,17 +64,16 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler{
 		}else {
 			//네이버 
 			Map map =  (Map) attrs.get("response");
-			log.info("map==="+map);
+
 			
 			snsId  = (String) map.get("id");
 			nickname  = (String) map.get("nickname"); 
-			log.info("id==="+snsId);
-			log.info("nickname==="+nickname); 
+
 			
 		}
 		
 		if(authMember.getNickname() != null) {
-			log.info("닉네임 정보 갱신 ");
+
 			nickname = authMember.getNickname();
 		}
 		
@@ -88,8 +85,6 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler{
 			
 			accessToken = jwtUtil.generateAccessToken(nickname, authentication.getAuthorities());
 			refreshToken = jwtUtil.generateRefreshToken(nickname);
-			log.info("accessToken==="+accessToken);
-			log.info("refreshToken==="+refreshToken);
 			
 			//발급받은 새로운 리프레시토큰으로 업데이트.
 			userFindService.updateRefreshToken(nickname, refreshToken);

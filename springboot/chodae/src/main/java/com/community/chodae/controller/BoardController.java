@@ -45,9 +45,7 @@ public class BoardController {
 								@RequestParam String searchType,
 								@RequestParam String keyword,
 								@RequestParam(required = false, defaultValue = "postRegdate") String order){
-		
-		log.info(""+pageVo+":::"+searchType+"::::"+keyword);
-		log.info(""+pageVo.makePageable(0, order)); 
+
 		
 		Page<Post> result = boardService.getUnifiedSearch(boardName, searchType, keyword, pageVo.makePageable(0, order));
 		
@@ -62,10 +60,7 @@ public class BoardController {
 			@RequestParam String searchType,
 			@RequestParam String keyword,
 			@RequestParam(required = false, defaultValue = "postRegdate") String order){
-		
 
-		log.info(""+pageVo+":::"+searchType+"::::"+keyword);
-		log.info(""+pageVo.makePageable(0, order)); 
 		
 		Page<Post> result = boardService.searchPost(boardName, searchType, keyword, pageVo.makePageable(0, order));
 		
@@ -80,9 +75,6 @@ public class BoardController {
 			@RequestParam String keyword,
 			@RequestParam(required = false, defaultValue = "postRegdate") String order){
 		
-		log.info(""+pageVo+":::"+searchType+"::::"+keyword);
-		log.info(""+pageVo.makePageable(0, order)); 
-		
 		Page<Post> result = boardService.findMyPost(nickname, searchType, keyword,pageVo.makePageable(0, order));
 		
 		return result;	
@@ -94,9 +86,6 @@ public class BoardController {
 						   @RequestParam String searchType,
 						   @RequestParam String keyword,
 						   @RequestParam(required = false, defaultValue = "replyRegdate") String order){
-		
-		log.info(""+pageVo+":::"+searchType+"::::"+keyword);
-		log.info(""+pageVo.makePageable(0, order)); 
 		
 		Page<Reply> result = boardService.findMyReply(nickname, searchType, keyword,pageVo.makePageable(0, order));
 		
@@ -126,9 +115,9 @@ public class BoardController {
 			){
 	
 		
-		log.info(""+category);
+
 		Post post = boardService.insertPost(boardName, title, content, nickname,category);
-		log.info(""+post);
+
 		
 		
 		if(file != null) {
@@ -309,7 +298,7 @@ public class BoardController {
 	@PostMapping("/{boardName}/recomm/{type}/{targetNo}") //type: 게시글 추천인지 댓글 추천인지, targetNo: 게시글번호, 댓글번호
 	public ResponseEntity<Long> insertRecomm(@PathVariable String boardName,@PathVariable String type, @PathVariable Long targetNo,
 			@RequestParam String nickname) {
-			log.info(""+nickname);
+
 		Long number = boardService.insertRecommend(boardName, nickname, type, targetNo);
 		
 		return new ResponseEntity<Long>(number,HttpStatus.OK); 
@@ -321,7 +310,7 @@ public class BoardController {
 	public ResponseEntity<Long> deleteRecomm(@PathVariable String boardName,@PathVariable String type, @PathVariable Long targetNo,
 			@PathVariable String nickname) {
 			
-		log.info(""+nickname+"");
+
 		Long number = boardService.deleteRecommend(boardName, nickname, type, targetNo);
 		
 		return new ResponseEntity<Long>(number,HttpStatus.OK); 

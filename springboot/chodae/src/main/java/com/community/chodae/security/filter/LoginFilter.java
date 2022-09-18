@@ -41,14 +41,8 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 
-
-		log.info("@@@@@@@@@@loginFilter@@@@@@@@@@@@@");
-		log.info("@@@@@@@@@attemptAuthentication@@@@@@@@@");
-		
-		 
 		String loginId = request.getParameter("loginId");
 		String pw = request.getParameter("password");
-		log.info(loginId+" ::::::" + pw);
 		
 		//포스트 방식으로 로그인하고 파라미터는 암호화해서 처리
 		
@@ -58,7 +52,7 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 		}
 		
 //		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginId, pw);
-//		log.info(":::@@@authToken:@@@::" + authToken);
+
 		
 		//직접인증처리함. => 다음단계는 인증후 성공 , 실패에 대한 후속 작업
 		
@@ -74,19 +68,9 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain,
 			Authentication authResult) throws IOException, ServletException {
 		
-		log.info("@@@@@@@@@@@@@@apilogin=> success@@@@@@@@@@@@@@@@@");
-		log.info("authResult:"+authResult);
-		log.info("authResult.getPrincipal(): "+authResult.getPrincipal());
-		log.info("authResult.getCredentials(): "+authResult.getCredentials());
-		
 		MemberAuthDTO userDTO = (MemberAuthDTO)authResult.getPrincipal();
 		String userName = userDTO.getUsername();
 		Object info = authResult.getPrincipal();
-		
-		
-		log.info("info => "+info);
-		log.info("MemberAuthDTO => "+userDTO);
-		log.info("getUsername() => "+userName);
 		
 		String accessToken = null;
 		String refreshToken = null;

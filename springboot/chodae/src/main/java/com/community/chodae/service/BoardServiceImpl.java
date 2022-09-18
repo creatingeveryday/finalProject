@@ -582,7 +582,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		if(result.isPresent()) {
 			Reply reply = result.get();
-			log.info(""+reply);
+
 			Post post = reply.getPost();
 			post.setReplyCount(post.getReplyCount()-1);
 			

@@ -46,40 +46,37 @@ public class HeaderCheckFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		log.info(request.getRequestURI());
-		log.info(""+antPathMatcher.match(pattern, request.getRequestURI()));
+
 		
 		if(antPathMatcher.match(pattern, request.getRequestURI())) {
 
-			log.info("CheckFilter pattern : "+pattern+" @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			
 			if(request.getRequestURI().equals("/api/login")
 					||request.getRequestURI().equals("/api/refresh")
 					||request.getRequestURI().equals("/api/find/**")
 					||request.getRequestURI().equals("/reg/**")) {
-				log.info("@@@@@@ 해당 주소 토큰 검사 필요없음 @@@@@@@@@@@");
+
 				filterChain.doFilter(request, response);
 				return;
 			} else {
-				log.info("@@@@@@ 토큰 검사 필요 @@@@@@@@@@@");
+
 				
 				String authHeader = request.getHeader("Authorization");
 				
 				if(StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
 					
-					log.info("authorization Access exist : "+ authHeader);
-					log.info(""+(authHeader == null));
+
 					
 					try {
 						
-						log.info("validate result  : "+ authHeader.substring(7));
+
 						
 						Claims claim = jwtUtil.validateAccessTokenExtract(authHeader.substring(7));
-						log.info("claim result  : "+ claim);
+
 						
 						
 						String nickname = (String) claim.get("nickname");
-						log.info("n2 result  : "+ nickname);
+
 						
 						Collection<SimpleGrantedAuthority> authoritiesList = new ArrayList<>();
 						List roleList =  (List) claim.get("role");
@@ -90,10 +87,10 @@ public class HeaderCheckFilter extends OncePerRequestFilter {
 						Iterator it = roleList.iterator();
 						while(it.hasNext()) {
 							Map roleMap = (Map) it.next();
-							log.info("Iterator result  : "+ roleMap);
+
 							
 							role = (String) roleMap.get("authority");
-							log.info("Iterator result role  : "+ role);
+
 							
 							authoritiesList.add(new SimpleGrantedAuthority(role));
 						}
@@ -122,7 +119,7 @@ public class HeaderCheckFilter extends OncePerRequestFilter {
 					}
 					
 				}else {
-					log.info("@@@@@@@@@@@@@@@@토큰 검사 필요한데 Authorization 헤더 없는 경우 @@@@@@@@@@@@@@@@@@");
+
 					filterChain.doFilter(request, response);
 					
 				}	

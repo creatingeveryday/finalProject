@@ -79,24 +79,21 @@ public String deleteReg(Long id) {
 	return "okay";
 }
 public String mailCheck(String email) throws Exception{
-	System.out.println("여기옴?");
-	System.out.println(email);
+
 	String Eresult = regRepo.findbyMail(email);
-	System.out.println(Eresult);
+
 	return Eresult;
 }
 public String nickCheck(String nickname) throws Exception{
-	System.out.println("여기옴?");
-	System.out.println(nickname);
+
 	String Nresult = regRepo.findbyNick(nickname);
-	System.out.println(Nresult);
+
 	return Nresult;
 }
 public String idCheck(String loginId) throws Exception{
-	System.out.println("여기옴?");
-	System.out.println(loginId);
+
 	String Iresult = regRepo.findbyId(loginId);
-	System.out.println(Iresult);
+
 	return Iresult;
 }
 }

@@ -27,10 +27,7 @@ public class postService  {
 private PostRepo postRepo;
 	
 	public Post insertPost(String boardName, String title,String nickname,  String content) {
-		System.out.println( nickname +"왜바뀜?");	
-		System.out.println("여기옴?");
-		
-		
+
 		User user = null;
 		Optional<User> result = userRepo.findUserByNickname(nickname);
 		if(result.isPresent()) {
@@ -38,18 +35,16 @@ private PostRepo postRepo;
 		}
 		
 		int boardNo = BoardGroup.valueOf(boardName).getValue();
-		System.out.println( nickname +"여기야 여기");	
 		Post post = new Post();
 		Board board = new Board();
 		board.setBoardNo(boardNo);
-		System.out.println(boardNo);
 		post.setBoard(board);
 		post.setPostRegdate(LocalDateTime.now());
 		post.setPostModdate(LocalDateTime.now());
 		PostContent postContent = new PostContent();
 		postContent.setContent(content);
 		post.setPostContent(postContent);
-		System.out.println(	boardName + "이게 맞어?");
+
 	//	post.setId(null);
 		post.setPostTitle(title);
 		post.setReplyCount(0);	
@@ -61,12 +56,12 @@ private PostRepo postRepo;
 		post.setPostComment("T");
 		post.setPostDisplay("T");
 		//post set image?
-		System.out.println("post 저장전"+post);
+
 		Post post2 = postRepo.save(post);
 
 
 		
-		System.out.println("post저장후"+post);
+
 		
 		return post;
 	}

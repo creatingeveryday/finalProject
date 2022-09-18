@@ -64,7 +64,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public long saveImg(MultipartFile file, Post post) {
 		//새로운 이미지 저장
-		System.out.println(file);
+
 		
 			String fileName = file.getOriginalFilename();
 			String saveFileName= post.getId()+"-"+post.getPostNo()+"-"+fileName;
@@ -119,8 +119,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		Optional<Image2> list = imageRepo.findByPostNo(post.getPostNo());
 		
-		System.out.println(list);
-		System.out.println("이미지 삭제???");
+
 		
 		
 		if(list.isPresent()) {
@@ -186,26 +185,22 @@ public class BoardServiceImpl implements BoardService {
 		post.setNickname(user.getNickname());
 		
 		List finduser2 = recommRepo.existPostRecomm2(post.getPostNo());
-		System.out.println("파인드 게시글 유저"+ finduser2);
+
 		post.setFinduser2(finduser2);
 
 		List finduser = recommRepo.existReplyRecomm2(post.getPostNo());
-		System.out.println("여기가 목표");
-		System.out.println("파인드 댓글 유저"+ finduser);
 
-		System.out.println("다 더한거??" + finduser);
 		
 		post.setFinduser(finduser);
 		
 		List<Reply> replies = post.getReplies();
-		System.out.println("여기가 존재해야 밑에 실행됨"+	replies);
+
 		
 		replies.forEach(reply -> {
-			System.out.println(reply + "@@@@@@@@@@@@@@@@@@@@@@@@");
+
 			User replyUser = userRepo.findById(reply.getId()).get();
 			reply.setNickname(replyUser.getNickname());
 			List finduser3 = recommRepo.existReplyRecomm3(reply.getReplyNo());
-	        System.out.println("각 댓글 추천"+finduser3);
 	        reply.setFinduser3(finduser3); 
 						
 	
@@ -215,10 +210,9 @@ public class BoardServiceImpl implements BoardService {
 
 	
 		
-		
-		System.out.println("아니야?"+replies);
+
 		post.setReplies(replies);
-		System.out.println(post);
+
 		return post;
 	}
 	
@@ -403,14 +397,14 @@ public class BoardServiceImpl implements BoardService {
 		post.setPostNotice("F");//공지사항 등록 여부
 		post.setPostComment("T");//댓글 작성 여부
 		post.setPostDisplay("T");//게시글 공개 여부
-		System.out.println("post 저장전"+post);
+
 		Post post2 = postRepo.save(post); //카테고리도 잘 추가되나 확인
-		System.out.println("post저장후"+post);
+
 		
 		
 		
 		// 카테고리 추가
-		System.out.println(category);
+
 		
 		JSONArray js = new JSONArray(category);
 		
@@ -423,7 +417,7 @@ public class BoardServiceImpl implements BoardService {
 				while(it.hasNext()) {
 					String key = (String) it.next();
 					String value = js.getJSONObject(i).getString(key);
-					System.out.println(key+":"+value);
+
 					
 					Category cate = new Category();
 					cate.setPost(post);
@@ -472,7 +466,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		if(result.isPresent()) {
 			Post post = result.get();
-			System.out.println(post);
+
 			post.setPostTitle(title); //제목 수정 
 			
 			PostContent postContent = post.getPostContent();
@@ -480,7 +474,6 @@ public class BoardServiceImpl implements BoardService {
 			post.setPostContent(postContent); //내용 수정 
 			
 			post.setPostModdate(LocalDateTime.now()); // 수정일자 반영
-			System.out.println(post);
 			
 			
 			//카테고리 업데이트 
@@ -495,7 +488,6 @@ public class BoardServiceImpl implements BoardService {
 					while(it.hasNext()) {
 						String key = (String) it.next();
 						String value = js.getJSONObject(i).getString(key);
-						System.out.println(key+":"+value);
 						
 						Category cate = new Category();
 						cate.setPost(post);
@@ -787,7 +779,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		
 	long count = recommRepo.countByApplication("T");
-		System.out.println(count);
+
 		return null;
 	}
 

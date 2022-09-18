@@ -59,13 +59,13 @@ public class RegisterController {
 	@Transactional
 	@GetMapping("/reg/me/email")
 	public ResponseEntity<?> getCheckMail(@RequestParam("email") String email) throws Exception{
-		System.out.println("실행됨?");
-		System.out.println(email);
+
+
 		String Eresults =regService.mailCheck(email);
 		if(Eresults==null) {
-			System.out.println("없음");
+
 		}else if (Eresults != null) {
-			System.out.println(Eresults +"잇음");
+
 		}
 		return new ResponseEntity<>(Eresults,HttpStatus.OK);
 	}
@@ -73,26 +73,24 @@ public class RegisterController {
 	@Transactional
 	@GetMapping("/reg/me/nickname")
 	public ResponseEntity<?> getCheckNick(@RequestParam("nickname") String nickname) throws Exception{
-		System.out.println("실행됨?");
-		System.out.println(nickname);
+
 		String Nresults =regService.nickCheck(nickname);
 		if(Nresults==null) {
-			System.out.println("없음");
+
 		}else if (Nresults != null) {
-			System.out.println(Nresults +"잇음");
+
 		}
 		return new ResponseEntity<>(Nresults,HttpStatus.OK);
 	}
 	@Transactional
 	@GetMapping("/reg/me/loginId")
 	public ResponseEntity<?> getCheckId(@RequestParam("loginId") String loginId) throws Exception{
-		System.out.println("실행됨?");
-		System.out.println(loginId);
+
 		String Iresults =regService.idCheck(loginId);
 		if(Iresults==null) {
-			System.out.println("없음");
+
 		}else if (Iresults != null) {
-			System.out.println(Iresults +"잇음");
+
 		}
 		return new ResponseEntity<>(Iresults,HttpStatus.OK);
 	}
